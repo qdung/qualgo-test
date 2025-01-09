@@ -8,8 +8,10 @@
     "allowImportingTsExtensions": false,
     "module": "esnext",
     "skipLibCheck": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "useDefineForClassFields": true
   },
+  
   "include": [
     "__mocks__/**/*",
     "./src/**/*",

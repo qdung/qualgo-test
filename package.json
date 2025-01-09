@@ -24,6 +24,8 @@
     "i18next": "^23.15.2",
     "intl-pluralrules": "^2.0.1",
     "ky": "^1.7.2",
+    "mobx": "^6.13.5",
+    "mobx-react": "^9.2.0",
     "react": "18.3.1",
     "react-error-boundary": "^4.0.13",
     "react-i18next": "^15.0.2",
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@babel/plugin-proposal-decorators": "^7.25.9",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",

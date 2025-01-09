@@ -34,7 +34,14 @@ export default [
       'import/named': 0,
       'import/namespace': 0,
       'import/no-duplicates': 0,
-      'import/no-extraneous-dependencies': 2,
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false,
+        },
+      ],
       'import/no-named-as-default-member': 0,
       'import/no-unresolved': 0,
       'import/order': 0,

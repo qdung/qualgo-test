@@ -11,8 +11,12 @@ module.exports = {
         root: ['./src'],
       },
     ],
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
     'inline-dotenv',
     'react-native-reanimated/plugin', // needs to be last
   ],
-  presets: ['module:@react-native/babel-preset'],
+  presets: [
+    'module:@react-native/babel-preset',
+    'module:metro-react-native-babel-preset',
+  ],
 };
