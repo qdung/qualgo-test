@@ -1,46 +1,54 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import type { Movie, RawMovie } from './types';
 
-interface Movie {
-  id: number;
-  title: string;
-}
+import axios from 'axios';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 class MovieStore {
+  error: null | string = null;
+  isLoading: boolean = false;
   movies: Movie[] = [];
-  query: string = '';
 
   constructor() {
     makeObservable(this, {
+      error: observable,
       fetchMovies: action,
-      filteredMovies: computed,
+      isLoading: observable,
       movies: observable,
-      query: observable,
-      setQuery: action,
     });
   }
 
-  async fetchMovies() {
+  async fetchMovies(query: string) {
+    this.isLoading = true;
+    this.error = null;
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?query=${this.query}&api_key=YOUR_TMDB_API_KEY`,
+      const response = await axios.get(
+        `https://search.imdbot.workers.dev/?q=${query}`,
       );
-      const data = await response.json();
-      this.movies = data.results;
+      runInAction(() => {
+        this.movies = response.data.description.map((movie: RawMovie) => ({
+          actors: movie['#ACTORS'],
+          aka: movie['#AKA'],
+          imdbId: movie['#IMDB_ID'],
+          imdbIv: movie['#IMDB_IV'],
+          imdbUrl: movie['#IMDB_URL'],
+          imgPoster: movie['#IMG_POSTER'],
+          photoHeight: movie['photo_height'],
+          photoWidth: movie['photo_width'],
+          rank: movie['#RANK'],
+          title: movie['#TITLE'],
+          year: movie['#YEAR'],
+        }));
+
+        // eslint-disable-next-line no-console
+        console.log(response.data.description[0]);
+      });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error fetching movies:', error);
+      this.error = (error as Error).message;
+    } finally {
+      runInAction(() => {
+        this.isLoading = false;
+      });
     }
-  }
-
-  setQuery(query: string) {
-    this.query = query;
-    this.fetchMovies();
-  }
-
-  get filteredMovies() {
-    return this.movies.filter((movie) =>
-      movie.title.toLowerCase().includes(this.query.toLowerCase()),
-    );
   }
 }
 

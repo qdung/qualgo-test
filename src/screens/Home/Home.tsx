@@ -1,20 +1,37 @@
+/* eslint-disable import/no-extraneous-dependencies */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import type { Movie } from '@/store/types';
+
+import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { useTheme } from '@/theme';
-import { useI18n, useUser } from '@/hooks';
 
-import { SearchBar } from '@/components/atoms';
-import { SafeScreen } from '@/components/templates';
+import { Loading } from '@/components/atoms';
+import { MovieItem, SafeScreen, SearchBar } from '@/components/templates';
 
-const Home = () => {
+import movieStore from '@/store/MovieStore';
+
+const keyExtractor = (item: Movie) => item.imdbId;
+const Movie = ({ item }: { item: Movie }) => <MovieItem movie={item} />;
+
+const Home = observer(() => {
   const { t } = useTranslation();
-  const { useFetchOneQuery } = useUser();
-  const { toggleLanguage } = useI18n();
 
   const {
     backgrounds,
+    borders,
     changeTheme,
     colors,
     components,
@@ -24,42 +41,49 @@ const Home = () => {
     variant,
   } = useTheme();
 
-  const [currentId, setCurrentId] = useState(-1);
-
-  const fetchOneUserQuery = useFetchOneQuery(currentId);
-
   useEffect(() => {
-    if (fetchOneUserQuery.isSuccess) {
-      Alert.alert(
-        t('screen_example.hello_user', { name: fetchOneUserQuery.data.name }),
-      );
-    }
-  }, [fetchOneUserQuery.isSuccess, fetchOneUserQuery.data, t]);
-
-  const onChangeTheme = () => {
-    changeTheme(variant === 'default' ? 'dark' : 'default');
-  };
+    movieStore.fetchMovies('asd');
+  }, []);
 
   return (
-    <SafeScreen
-      isError={fetchOneUserQuery.isError}
-      onResetError={fetchOneUserQuery.refetch}
-    >
-      <View
-        style={[
-          gutters.paddingHorizontal_16,
-          layout.flex_1,
-          gutters.paddingTop_12,
-          backgrounds.gray100,
-        ]}
-      >
-        <SearchBar onSearch={(query) => {}} />
-        <ScrollView style={[gutters.paddingTop_12]}>
-          <Text>asdas</Text>
-        </ScrollView>
+    <SafeScreen>
+      <View style={[layout.flex_1, gutters.paddingTop_12, backgrounds.gray100]}>
+        <SearchBar />
+        <View style={[]}>
+          {movieStore.isLoading ? (
+            <Loading />
+          ) : movieStore.error ? (
+            <Text>{movieStore.error}</Text>
+          ) : (
+            <FlatList
+              data={movieStore.movies}
+              getItemLayout={(data, index) => ({
+                index,
+                length: 100,
+                offset: 100 * index,
+              })}
+              initialNumToRender={10}
+              keyExtractor={keyExtractor}
+              maxToRenderPerBatch={10}
+              removeClippedSubviews={true}
+              renderItem={Movie}
+              style={[gutters.paddingTop_12, gutters.paddingHorizontal_16]}
+              testID="movie-item"
+              updateCellsBatchingPeriod={200}
+              windowSize={5}
+            />
+          )}
+        </View>
       </View>
     </SafeScreen>
   );
-};
+});
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16 },
+  movieItem: { borderBottomColor: '#ccc', borderBottomWidth: 1, padding: 16 },
+  movieTitle: { fontSize: 18 },
+  poster: { height: 150, width: 100 },
+});
 
 export default Home;

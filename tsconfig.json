@@ -8,8 +8,7 @@
     "allowImportingTsExtensions": false,
     "module": "esnext",
     "skipLibCheck": true,
-    "noUnusedLocals": true,
-    "useDefineForClassFields": true
+    "noUnusedLocals": true
   },
   
   "include": [

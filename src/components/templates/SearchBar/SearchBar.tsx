@@ -1,18 +1,16 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
-import { useTheme } from '@/theme';
+import movieStore from '@/store/MovieStore';
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const { variant } = useTheme();
+const SearchBar = observer(() => {
   const [query, setQuery] = useState('');
 
   const handleSearch = () => {
-    onSearch(query);
+    console.log('handleSearch');
+    movieStore.fetchMovies(query);
   };
 
   return (
@@ -26,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
