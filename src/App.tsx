@@ -9,6 +9,8 @@ import ApplicationNavigator from '@/navigation/Application';
 
 import '@/translations';
 
+import { NetworkStatus } from '@/components/molecules';
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
@@ -28,6 +30,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider storage={storage}>
           <ApplicationNavigator />
+          <NetworkStatus />
         </ThemeProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
