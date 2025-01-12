@@ -1,49 +1,64 @@
+import type { ViewStyle } from 'react-native';
 import type { Movie } from '@/store/types';
 
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import { useTheme } from '@/theme';
 import { navigateTo } from '@/navigation/Application';
 import { Paths } from '@/navigation/paths';
+
+import movieStore from '@/store/MovieStore';
+
+const ITEM_HEIGHT = 120;
+
+const itemHeight: ViewStyle = { height: ITEM_HEIGHT };
 
 interface MovieItemProps {
   movie: Movie;
 }
 
 const MovieItem: React.FC<MovieItemProps> = ({ movie }) => {
-  const { backgrounds, borders, gutters, layout, variant } = useTheme();
-
-  const navigation = useNavigation();
+  const { borders, fonts, gutters, layout } = useTheme();
 
   const placeholderImg = require('@/theme/assets/images/tom.png');
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const navigateToDetailSreen = () => (movie: Movie) =>
-    navigateTo(Paths.MovieDetail, movie);
+  const handlePress = async () => {
+    movieStore.retrieveMovieDetail(movie);
+    navigateTo(Paths.MovieDetail, { movie });
+  };
 
   return (
     <TouchableOpacity
-      onPress={() => navigateTo(Paths.MovieDetail, movie)}
-      style={[layout.row, gutters.marginBottom_12]}
+      onPress={handlePress}
+      style={[
+        layout.flex_1,
+        layout.row,
+        gutters.marginBottom_12,
+        gutters.padding_12,
+        borders.w_1,
+        borders.gray800,
+        borders.rounded_16,
+        itemHeight,
+      ]}
     >
       <Image
         defaultSource={placeholderImg}
-        height={96}
         // eslint-disable-next-line no-console
-        onError={(error) =>
+        onError={() =>
           // eslint-disable-next-line no-console
           console.error('Image loading error:', movie.imgPoster)
         }
+        resizeMode="cover"
         source={{ uri: movie.imgPoster }}
-        style={[borders.rounded_16]}
-        width={124}
+        style={[borders.rounded_16, { height: '100%', width: 124 }]}
       />
-      <View style={[gutters.marginLeft_12, layout.justifyAround]}>
-        <Text style={[]}>{movie.title}</Text>
-        <Text>{movie.year}</Text>
-        <Text>Rank: {movie.rank}</Text>
+      <View style={[gutters.marginLeft_12, layout.justifyAround, { flex: 1 }]}>
+        <Text numberOfLines={2} style={[layout.wrap, fonts.gray800]}>
+          {movie.title}
+        </Text>
+        <Text style={fonts.gray800}>{movie.year}</Text>
+        <Text style={fonts.gray800}>Rank: {movie.rank}</Text>
       </View>
     </TouchableOpacity>
   );

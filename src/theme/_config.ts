@@ -16,7 +16,7 @@ const colorsLight = {
   purple50: '#1B1A23',
   purple500: '#44427D',
   red500: '#C13333',
-  skeleton: '#A1A1A1',
+  skeleton: '#000000',
 } as const;
 
 const colorsDark = {
@@ -29,16 +29,16 @@ const colorsDark = {
   purple50: '#1B1A23',
   purple500: '#A6A4F0',
   red500: '#C13333',
-  skeleton: '#303030',
+  skeleton: '#1e1e1e',
 } as const;
 
-const sizes = [12, 16, 24, 32, 40, 80] as const;
+const sizes = [4, 8, 10, 12, 14, 16, 24, 32, 40, 80] as const;
 
 export const config = {
   backgrounds: colorsLight,
   borders: {
     colors: colorsLight,
-    radius: [4, 16],
+    radius: [4, 8, 12, 16],
     widths: [1, 2],
   },
   colors: colorsLight,

@@ -40,6 +40,9 @@ export default {
   rowReverse: {
     flexDirection: 'row-reverse',
   },
+  selfCenter: {
+    alignSelf: 'center',
+  },
   wrap: {
     flexWrap: 'wrap',
   },

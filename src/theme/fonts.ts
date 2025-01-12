@@ -37,6 +37,12 @@ export const staticFontStyles = {
   capitalize: {
     textTransform: 'capitalize',
   },
+  semiBold: {
+    fontWeight: '600',
+  },
+  textAlignJustify: {
+    textAlign: 'justify',
+  },
   uppercase: {
     textTransform: 'uppercase',
   },

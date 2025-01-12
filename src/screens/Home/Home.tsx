@@ -4,13 +4,9 @@ import type { Movie } from '@/store/types';
 
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
-  Alert,
   FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
+  RefreshControl,
   Text,
   TouchableOpacity,
   View,
@@ -27,29 +23,62 @@ const keyExtractor = (item: Movie) => item.imdbId;
 const Movie = ({ item }: { item: Movie }) => <MovieItem movie={item} />;
 
 const Home = observer(() => {
-  const { t } = useTranslation();
-
   const {
     backgrounds,
     borders,
     changeTheme,
     colors,
-    components,
     fonts,
     gutters,
     layout,
     variant,
   } = useTheme();
 
+  const [refresh, setRefresh] = useState(false);
+
+  const onChangeTheme = () => {
+    changeTheme(variant === 'default' ? 'dark' : 'default');
+  };
+
+  const onRefresh = () => {
+    setRefresh(true);
+    movieStore.fetchRandomMovies();
+    setRefresh(false);
+  };
+
   useEffect(() => {
-    movieStore.fetchMovies('asd');
+    movieStore.fetchRandomMovies();
   }, []);
 
   return (
     <SafeScreen>
       <View style={[layout.flex_1, gutters.paddingTop_12, backgrounds.gray100]}>
-        <SearchBar />
-        <View style={[]}>
+        <View
+          style={[
+            layout.row,
+            layout.justifyBetween,
+            layout.itemsCenter,
+            gutters.paddingRight_12,
+          ]}
+        >
+          <SearchBar />
+          <TouchableOpacity
+            onPress={onChangeTheme}
+            style={[
+              borders.w_1,
+              gutters.padding_12,
+              borders.rounded_16,
+              borders.gray800,
+              { borderRadius: 100 },
+            ]}
+          >
+            <Text style={[fonts.gray800, fonts.size_16]}>
+              {variant === 'default' ? '🌑' : '☀️'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={[layout.flex_1]}>
           {movieStore.isLoading ? (
             <Loading />
           ) : movieStore.error ? (
@@ -59,12 +88,19 @@ const Home = observer(() => {
               data={movieStore.movies}
               getItemLayout={(data, index) => ({
                 index,
-                length: 100,
-                offset: 100 * index,
+                length: 120,
+                offset: 120 * index,
               })}
               initialNumToRender={10}
               keyExtractor={keyExtractor}
               maxToRenderPerBatch={10}
+              refreshControl={
+                <RefreshControl
+                  onRefresh={onRefresh}
+                  refreshing={refresh}
+                  tintColor={colors.skeleton}
+                />
+              }
               removeClippedSubviews={true}
               renderItem={Movie}
               style={[gutters.paddingTop_12, gutters.paddingHorizontal_16]}
@@ -77,13 +113,6 @@ const Home = observer(() => {
       </View>
     </SafeScreen>
   );
-});
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  movieItem: { borderBottomColor: '#ccc', borderBottomWidth: 1, padding: 16 },
-  movieTitle: { fontSize: 18 },
-  poster: { height: 150, width: 100 },
 });
 
 export default Home;

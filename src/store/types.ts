@@ -13,15 +13,65 @@ export interface RawMovie {
 }
 
 export interface Movie {
-  actors: string;
   aka: string;
   imdbId: string;
   imdbIv: string;
   imdbUrl: string;
   imgPoster: string;
+  overview: string;
   photoHeight: number;
   photoWidth: number;
+  poster_path: string;
   rank: number;
+  release_date: string;
   title: string;
+  vote_average: number;
   year: number;
+}
+
+export interface Actor {
+  name: string;
+  type: string;
+  url: string;
+}
+
+interface Review {
+  author: { name: string; type: string };
+  dateCreated: string;
+  inLanguage: string;
+  itemReviewed: { type: string; url: string };
+  name: string;
+  reviewBody: string;
+  reviewRating: {
+    bestRating: number;
+    ratingValue: number;
+    type: string;
+    worstRating: number;
+  };
+  type: string;
+}
+
+export interface MovieDetail {
+  actor: Actor[];
+  descrition: string;
+  imgPoster: string;
+  keywords: string[];
+  rating: number;
+  review: Review;
+  title: string;
+  votes: number;
+}
+
+interface TitleKeywordNode {
+  __typename: string;
+  text: string;
+}
+interface TitleKeywordEdge {
+  __typename: string;
+  node: TitleKeywordNode;
+}
+export interface TitleKeywordConnection {
+  __typename: string;
+  edges: TitleKeywordEdge[];
+  total: number;
 }
