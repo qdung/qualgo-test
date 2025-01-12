@@ -1,12 +1,9 @@
-import type {
-  Movie,
-  MovieDetail,
-  RawMovie,
-  TitleKeywordConnection,
-} from './types';
+import type { Movie, MovieDetail, RawMovie } from './types';
 
 import axios from 'axios';
 import { action, makeObservable, observable, runInAction } from 'mobx';
+
+import { removeHtmlEntities } from '@/utils/helper';
 
 class MovieStore {
   error: null | string = null;
@@ -110,7 +107,8 @@ class MovieStore {
       runInAction(() => {
         this.selectedMovie = {
           actor: movieDetail['short']['actor'] || [],
-          descrition: movieDetail['short']['description'] || '',
+          descrition:
+            removeHtmlEntities(movieDetail['short']['description']) || '',
           imgPoster: movieDetail['short']['image'],
           keywords: movieDetail['short']['keywords'],
           rating: movieDetail['short']['aggregateRating']['ratingValue'] || 0,
@@ -138,7 +136,3 @@ class MovieStore {
 
 const movieStore = new MovieStore();
 export default movieStore;
-
-function extractTexts(data: TitleKeywordConnection): string[] {
-  return data.edges.map((edge) => edge.node.text);
-}

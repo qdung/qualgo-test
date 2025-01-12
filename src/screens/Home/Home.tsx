@@ -1,5 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import type { Movie } from '@/store/types';
 
 import { observer } from 'mobx-react-lite';
@@ -18,6 +16,8 @@ import { Loading } from '@/components/atoms';
 import { MovieItem, SafeScreen, SearchBar } from '@/components/templates';
 
 import movieStore from '@/store/MovieStore';
+
+const ITEM_HEIGHT = 120;
 
 const keyExtractor = (item: Movie) => item.imdbId;
 const Movie = ({ item }: { item: Movie }) => <MovieItem movie={item} />;
@@ -88,8 +88,8 @@ const Home = observer(() => {
               data={movieStore.movies}
               getItemLayout={(data, index) => ({
                 index,
-                length: 120,
-                offset: 120 * index,
+                length: ITEM_HEIGHT,
+                offset: ITEM_HEIGHT * index,
               })}
               initialNumToRender={10}
               keyExtractor={keyExtractor}

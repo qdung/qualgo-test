@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import type { ViewStyle } from 'react-native';
 
 import debounce from 'lodash/debounce';
@@ -12,7 +11,7 @@ import movieStore from '@/store/MovieStore';
 
 const SearchBar = observer(({ style }: { style?: ViewStyle }) => {
   const [query, setQuery] = useState('');
-  const { backgrounds, borders, gutters, layout, variant, fonts } = useTheme();
+  const { borders, gutters, layout, variant } = useTheme();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(

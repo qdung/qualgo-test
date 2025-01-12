@@ -1,5 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
 import type { ViewStyle } from 'react-native';
 
 import NetInfo from '@react-native-community/netinfo';
@@ -53,7 +51,7 @@ const NetworkStatus: React.FC = () => {
       >
         <Text style={[]}>No internet connection</Text>
         <TouchableOpacity onPress={handleRetry} style={[gutters.marginTop_24]}>
-          <Text style={[]}>Retry</Text>
+          <Text style={[]}>Press to retry</Text>
         </TouchableOpacity>
       </View>
     </Modal>

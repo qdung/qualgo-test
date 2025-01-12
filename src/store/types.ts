@@ -61,17 +61,3 @@ export interface MovieDetail {
   title: string;
   votes: number;
 }
-
-interface TitleKeywordNode {
-  __typename: string;
-  text: string;
-}
-interface TitleKeywordEdge {
-  __typename: string;
-  node: TitleKeywordNode;
-}
-export interface TitleKeywordConnection {
-  __typename: string;
-  edges: TitleKeywordEdge[];
-  total: number;
-}

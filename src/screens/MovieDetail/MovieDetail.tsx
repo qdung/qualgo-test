@@ -1,8 +1,5 @@
 import type { ImageStyle } from 'react-native';
-import type { Paths } from '@/navigation/paths';
-import type { RootScreenProps } from '@/navigation/types';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { observer } from 'mobx-react-lite';
 import {
   Alert,

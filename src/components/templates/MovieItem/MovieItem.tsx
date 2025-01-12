@@ -25,7 +25,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie }) => {
 
   const handlePress = async () => {
     movieStore.retrieveMovieDetail(movie);
-    navigateTo(Paths.MovieDetail, { movie });
+    navigateTo(Paths.MovieDetail);
   };
 
   return (
@@ -36,7 +36,6 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie }) => {
         layout.row,
         gutters.marginBottom_12,
         gutters.padding_12,
-        borders.w_1,
         borders.gray800,
         borders.rounded_16,
         itemHeight,
@@ -54,11 +53,13 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie }) => {
         style={[borders.rounded_16, { height: '100%', width: 124 }]}
       />
       <View style={[gutters.marginLeft_12, layout.justifyAround, { flex: 1 }]}>
-        <Text numberOfLines={2} style={[layout.wrap, fonts.gray800]}>
+        <Text
+          numberOfLines={2}
+          style={[layout.wrap, fonts.gray800, fonts.bold]}
+        >
           {movie.title}
         </Text>
-        <Text style={fonts.gray800}>{movie.year}</Text>
-        <Text style={fonts.gray800}>Rank: {movie.rank}</Text>
+        <Text style={[fonts.gray800]}>Year: {movie.year}</Text>
       </View>
     </TouchableOpacity>
   );
