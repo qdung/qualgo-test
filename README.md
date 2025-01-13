@@ -20,6 +20,12 @@ git clone https://github.com/qdung/QualgoTest.git
 cd QualgoTest
 ```
 
+3. Install dependencies
+
+```bash
+yarn
+```
+
 ## React Native Setup
 
 ### iOS Setup
