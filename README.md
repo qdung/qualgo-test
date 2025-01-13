@@ -4,6 +4,8 @@
 
 This is a test project for Qualgo.
 
+[View Demo](https://youtube.com/shorts/AOyEbZQjPFY)
+
 ## Getting Started
 
 ### Installation
