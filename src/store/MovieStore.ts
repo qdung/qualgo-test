@@ -5,6 +5,12 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { removeHtmlEntities } from '@/utils/helper';
 
+// TODO:
+// - Add error handling for edge cases in movie data
+// - Implement caching mechanism for API responses
+// - Add unit tests for store methods
+// - Add a SDK a separate business logic
+
 class MovieStore {
   error: null | string = null;
   isLoading: boolean = false;

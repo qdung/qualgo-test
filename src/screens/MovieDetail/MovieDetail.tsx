@@ -47,6 +47,11 @@ const MovieDetail = observer(() => {
     }),
   };
 
+  const paddingBottom =
+    Platform.OS === 'android'
+      ? gutters.paddingBottom_80
+      : gutters.paddingBottom_40;
+
   return (
     <SafeScreen>
       <TouchableOpacity
@@ -60,7 +65,10 @@ const MovieDetail = observer(() => {
           width={32}
         />
       </TouchableOpacity>
-      <ScrollView style={[gutters.paddingTop_12, gutters.marginTop_12]}>
+      <ScrollView
+        contentContainerStyle={paddingBottom}
+        style={[gutters.paddingTop_12, gutters.marginTop_12]}
+      >
         {isLoadingDetail ? (
           <Loading />
         ) : (
