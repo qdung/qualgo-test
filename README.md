@@ -6,10 +6,6 @@ This is a test project for Qualgo.
 
 ## Getting Started
 
-### Prerequisites
-
-List any prerequisites here.
-
 ### Installation
 
 1. Clone the repository
@@ -23,10 +19,6 @@ git clone https://github.com/qdung/QualgoTest.git
 ```bash
 cd QualgoTest
 ```
-
-## License
-
-Specify your license here.
 
 ## React Native Setup
 
@@ -43,6 +35,31 @@ sudo gem install cocoapods
 ```bash
 cd ios
 pod install
+```
+
+3. Run iOS app:
+
+```bash
+yarn ios
+```
+
+Optional: To run on a specific iOS simulator or device, you can modify package.json:
+
+```json
+{
+  "scripts": {
+    "ios": "react-native run-ios",
+    "ios:14": "react-native run-ios --simulator='iPhone 14'  -configuration Debug",
+    "ios:14pro": "react-native run-ios --simulator='iPhone 14 Pro'  -configuration Debug"
+  }
+}
+```
+
+Then run using:
+
+```bash
+yarn ios:14     # For iPhone 14
+yarn ios:14pro  # For iPhone 14 Pro
 ```
 
 ### Android Setup
@@ -63,4 +80,10 @@ sdk.dir = C:\\Users\\USERNAME\\AppData\\Local\\Android\\Sdk
 ```bash
 cd android
 ./gradlew clean
+```
+
+4. Run Android app:
+
+```bash
+yarn android
 ```

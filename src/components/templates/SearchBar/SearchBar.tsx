@@ -40,7 +40,6 @@ const SearchBar = observer(({ style }: { style?: ViewStyle }) => {
           borders.w_1,
           gutters.padding_12,
           fonts.gray800,
-          // { height: 40 },
         ]}
         value={query}
       />
