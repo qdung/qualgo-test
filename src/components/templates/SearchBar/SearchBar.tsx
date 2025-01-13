@@ -11,7 +11,7 @@ import movieStore from '@/store/MovieStore';
 
 const SearchBar = observer(({ style }: { style?: ViewStyle }) => {
   const [query, setQuery] = useState('');
-  const { borders, gutters, layout, variant } = useTheme();
+  const { borders, fonts, gutters, layout, variant } = useTheme();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
@@ -39,6 +39,7 @@ const SearchBar = observer(({ style }: { style?: ViewStyle }) => {
           borders.rounded_16,
           borders.w_1,
           gutters.padding_12,
+          fonts.gray800,
           // { height: 40 },
         ]}
         value={query}
