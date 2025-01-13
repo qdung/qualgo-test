@@ -46,8 +46,7 @@ class MovieStore {
             rank: movie['#RANK'],
             title: movie['#TITLE'],
             year: movie['#YEAR'],
-          }))
-          .slice(0, 10);
+          }));
       });
     } catch (error) {
       this.error = (error as Error).message;
@@ -117,7 +116,6 @@ class MovieStore {
             movieDetail['short']['name'] ??
             movieDetail['short']['alternateName'] ??
             '',
-          votes: 2, //movieDetail['short']
         };
       });
     } catch (error) {

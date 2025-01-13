@@ -59,5 +59,4 @@ export interface MovieDetail {
   rating: number;
   review: Review;
   title: string;
-  votes: number;
 }
